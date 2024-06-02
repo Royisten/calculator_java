@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 public class calculatortest02 implements ActionListener {
     Boolean isOperationUsed = false;
     String Oldvalue;
+    String operator = "";// used string for action implemented by operators
     JFrame jf;
     JLabel displayJLabel;
     JButton nineButton;
@@ -156,7 +157,52 @@ public class calculatortest02 implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == nineButton) {
+        if (e.getSource() == ClearButton) {
+            displayJLabel.setText("");
+            Oldvalue = "";
+            operator = "";
+            isOperationUsed = false;
+        } else if (e.getSource() == equallButton) {
+            String NewValue = displayJLabel.getText();
+            float OldvalueF = Float.parseFloat(Oldvalue);
+            float NewValueF = Float.parseFloat(NewValue);
+            float Result = 0;
+
+            switch (operator) {
+                case "+":
+                    Result = OldvalueF + NewValueF;
+                    break;
+                case "-":
+                    Result = OldvalueF - NewValueF;
+                    break;
+                case "*":
+                    Result = OldvalueF * NewValueF;
+                    break;
+                case "/":
+                    Result = OldvalueF / NewValueF;
+                    break;
+                default:
+                    break;
+            }
+            displayJLabel.setText(Result + "");
+
+        } else if (e.getSource() == plusButton) {
+            isOperationUsed = true;
+            Oldvalue = displayJLabel.getText();
+            operator = "+";
+        } else if (e.getSource() == divideButton) {
+            isOperationUsed = true;
+            Oldvalue = displayJLabel.getText();
+            operator = "/";
+        } else if (e.getSource() == multiplyButton) {
+            isOperationUsed = true;
+            Oldvalue = displayJLabel.getText();
+            operator = "*";
+        } else if (e.getSource() == minusButton) {
+            isOperationUsed = true;
+            Oldvalue = displayJLabel.getText();
+            operator = "-";
+        } else if (e.getSource() == nineButton) {
             if (isOperationUsed) {
                 displayJLabel.setText("9");
                 isOperationUsed = false;
@@ -236,34 +282,13 @@ public class calculatortest02 implements ActionListener {
             }
 
         } else if (e.getSource() == decimalButton) {
-            displayJLabel.setText(displayJLabel.getText() + ".");
-            // ********************** */
-        } else if (e.getSource() == equallButton) {
-            String NewValue = displayJLabel.getText();
-            float OldvalueF = Float.parseFloat(Oldvalue);
-            float NewValueF = Float.parseFloat(NewValue);
-            float Result = NewValueF + OldvalueF;
-            displayJLabel.setText(Result + "");
-            // ********************** */
-        } else if (e.getSource() == plusButton) {
-            isOperationUsed = true;
-            Oldvalue = displayJLabel.getText();
-            // ********************** */
-        } else if (e.getSource() == divideButton) {
-            isOperationUsed = true;
-            Oldvalue = displayJLabel.getText();
-            // *****************
-        } else if (e.getSource() == multiplyButton) {
-            isOperationUsed = true;
-            Oldvalue = displayJLabel.getText();
-            // ********************** */
-        } else if (e.getSource() == minusButton) {
-            isOperationUsed = true;
-            Oldvalue = displayJLabel.getText();
-            // ********************** */
-        } else if (e.getSource() == ClearButton) {
-            displayJLabel.setText("");
-            // ********************** */
+            if (isOperationUsed) {
+                displayJLabel.setText(".");
+                isOperationUsed = false;
+            } else {
+                displayJLabel.setText(displayJLabel.getText() + ".");
+            }
+
         }
 
     }
